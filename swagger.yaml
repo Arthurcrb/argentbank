@@ -1,0 +1,224 @@
+swagger: '2.0'
+info:
+  description: Bank Argent API documentation
+  title: API endpoints for details of transaction
+  version: 1.0.0
+  termsOfService: http://swagger.io/terms/
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/transactions/:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Get all transactions within the present month.
+      description: Fetch all transactions for the currently logged-in user within the current month.
+      operationId: getTransactions
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer JWT token
+          type: string
+          required: true
+      responses:
+        '200':
+          description: User's transactions for the current month have been successfully retrieved.
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/transactions/{month}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Get all transactions for the chosen month.
+      description:  Fetch all transactions for the currently logged-in user within the selected month.
+      operationId: getTransactionsMonth
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: month
+          description: get transactions for selected month
+          type: string
+          required: true
+      responses:
+        '200':
+          description: User's transactions for the selected month have been successfully retrieved.
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/transactions/details/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Retrieve transaction details for an alternate view.
+      description: Retrieve comprehensive details of a transaction for the currently logged-in user in a different view, including transaction date, description, amount, currency, type, category, and additional notes.
+      operationId: getTransactionDetails
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Successfully retrieved the details of the transaction!
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/transactions/details/{transactionId}/category:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Update an existing transaction's category.
+      description: This operation allows you to change the category associated with a specific transaction for the currently logged-in user. It enables you to reassign or update the transaction's category to more accurately reflect its nature or purpose.
+      operationId: updateTransactionCategory
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: Updated transaction category
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionCategoryUpdate'
+      responses:
+        '200':
+          description: Successfully updated the transaction's category!
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/transactions/details/{transactionId}/notes:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Update the notes for a transaction that already exists.
+      description: This operation allows you to make changes to the notes associated with a specific transaction for the currently logged-in user. It provides the ability to edit and update the transaction's notes.
+      operationId: updateTransactionNotes
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: Updated transaction notes
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionNotesUpdate'
+      responses:
+        '200':
+          description: Successfully updated the transaction's notes!
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  Transactions:
+    type: object
+    properties:
+      transactionsId:
+        type: integer
+        format: int64
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: number
+      currency:
+        type: string
+      type:
+        type: string
+      category:
+        type: string
+      notes:
+        type: string
+  TransactionCategoryUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+  TransactionNotesUpdate:
+    type: object
+    properties:
+      notes:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      transactionsId:
+        type: integer
+        format: int64
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: number
+      currency:
+        type: string
+      type:
+        type: string
+      category:
+        type: string
+      notes:
+        type: string

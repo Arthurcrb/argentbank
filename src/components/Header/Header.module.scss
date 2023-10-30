@@ -1,0 +1,88 @@
+@import '../../';
+
+.mainNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+}
+
+.mainNav a {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+.mainNavItem {
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+
+.mainNavItem:hover {
+  text-decoration: underline;
+}
+
+.mainNavLogo {
+  display: flex;
+  align-items: center;
+}
+
+.mainNavLogoImage {
+  max-width: 100%;
+  width: 300px;
+}
+
+.signOut {
+  font-size: 1.3rem;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.signIn {
+  font-size: 1.3rem;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.navRight {
+  display: flex;
+  flex-direction: row;
+}
+
+.fa-user-circle:before {
+  margin-right: 10px;
+}
+
+.userName {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+@media all and (max-width: 768px) {
+  .mainNav a {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #2c3e50;
+  }
+
+  .userName {
+    margin-left: 10px;
+  }
+
+  .mainNavLogoImage {
+    max-width: 100%;
+    width: 200px;
+  }
+
+  .signOut {
+    font-size: 1.1rem;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+
+  .signIn {
+    font-size: 1.1rem;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+}
